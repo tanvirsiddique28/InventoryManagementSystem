@@ -1,0 +1,90 @@
+
+
+<style>
+ 
+</style>
+<h4 style="background-color:rgb(232, 162, 235) ;text-align: center;">Swapno Inventory System</h4>
+<div class="container mt-5">
+  <div class="row">
+  
+    <div class="col-md-6">
+      <h4 style="background-color:rgb(0, 255, 255) ;text-align: center;">Product Insertion</h4>
+      <div>
+        <label for="id" class="form-label">ID</label>
+        <input type="text" class="form-control" id="id" #id1="ngModel" [(ngModel)] = "id">
+      </div>
+
+      <div class="form-group">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" #name1="ngModel" [(ngModel)] = "name"
+          
+           required
+           minlength="3"
+           pattern="^[A-Z a-z]+$"
+        >
+        <ul class="text-danger list-unstyled" *ngIf="name1.dirty && name1.invalid">
+          <li *ngIf="name1.errors?.['required']">
+            you must enter a product name
+          </li>
+          <li *ngIf="name1.errors?.['pattern']">
+            product names can only contain letters and spaces
+          </li>
+          <li *ngIf="name1.errors?.['minlength']">
+          products names must be at least
+          {{name1.errors?.['minlength'].requiredLength}} c
+          </li>
+        </ul>
+      </div>
+      <div>
+        <label for="stock" class="form-label">Stock</label>
+        <input type="text" class="form-control" id="stock" #stock1="ngModel" [(ngModel)] = "stock">
+      </div>
+      <div>
+        <label for="price" class="form-label">Price</label>
+        <input type="text" class="form-control" id="price" #price1="ngModel" [(ngModel)] = "price">
+      </div>
+      <div>
+        <label for="discount" class="form-label">Discount</label>
+        <input type="text" class="form-control" id="discount" #discount1="ngModel" [(ngModel)] = "discount">
+      </div>
+      <div class="mt-2">
+      <button type="submit" class="btn btn-primary" (click)="addProducts()">Save</button>
+      &nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-success" (click)="updateProducts(id1.value)">Update</button>
+      &nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-danger" (click)="deleteProducts(id1.value)">Delete</button>
+    </div>
+    </div>
+ 
+  
+
+
+    <div class="col-md-6">
+      <h4 style="background-color:rgb(0, 255, 255) ;text-align: center;">Product Information</h4>
+      <h2 style="background-color: brown; padding: 10px; height: 60px;">{{messages}}</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Price</th>
+            <th scope="col">Discount(%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of productinfo;let i = index" [ngClass]="{'text bg-danger':s.discount!<2,'text bg-primary':s.discount!>=2,'text bg-success':s.discount!>=3.5}">
+            <th scope="row">{{i+1}}</th>
+            <td>{{s.id}}</td>
+            <td>{{s.name}}</td>
+            <td>{{s.stock}}</td>
+            <td>{{s.price}}</td>
+            <td>{{s.discount}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="mt-5" style="background-color:rgb(232, 162, 235) ; padding: 10px; height: 30px;"></div>
+<router-outlet></router-outlet>
